@@ -18,6 +18,7 @@ import Articles from './src/components/Articles';
 import Feed from './Feed';
 // import Accomplishments from './Accomplishments';
 
+
 const fetchFonts = () => {
   return Font.loadAsync({
     'fredoka-one': require('./assets/fonts/FredokaOne-Regular.ttf'),
@@ -104,12 +105,14 @@ function TasksScreen() {
 function AccountScreen() {
   const activityData = [
   {
-    value: 0.8, // ring will use color from theme
+    label: "Transportation",
+    value: 0.8,
+    color: "#69941c",
   },
   {
-    label: "ACTIVITY",
+    label: "Recyclying",
     value: 0.6,
-    color: "#cb5f18",
+    color: "#9dc9d1",
   },
   {
     label: "RINGS",
@@ -119,48 +122,25 @@ function AccountScreen() {
   }
   ];
 
-     const activityConfig = {
-       width: 150,
-       height: 150
-     };
+  const activityConfig = {
+    width: 150,
+    height: 150
+  };
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ActivityRings legend={true} data={activityData} config={activityConfig} />
+      <Text style={styles.titleText}>
 
-     return (
-        <View style={styles.container}>
-          <ActivityRings data={activityData} config={activityConfig} />
-        </View>
-     );
-  // const BasicExample = () => {
-  //    const activityData = [
-  //      { value: 0.8 },
-  //      { value: 0.6 },
-  //      { value: 0.2 }
-  //    ];
-  //
-  //    const activityConfig = {
-  //      width: 150,
-  //      height: 150
-  //    };
-  //
-  //    return (
-  //       <View style={styles.container}>
-  //         <ActivityRings data={activityData} config={activityConfig} />
-  //       </View>
-  //    );
-  // }
-  // return (
-  //   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-  //     <Text style={styles.titleText}>
-  //       Welcome!
-  //     </Text>
-  //     <Text style={styles.mainText}>
-  //       Ready to start living a sustainable lifestyle?
-  //     </Text>
-  //     <Button
-  //       title="Go to Tasks"
-  //       onPress={() => navigation.navigate('Tasks')}
-  //     />
-  //   </View>
-  // );
+      </Text>
+      <Text style={styles.mainText}>
+        Ready to start living a sustainable lifestyle?
+      </Text>
+      <Button
+        title="Go to Tasks"
+        onPress={() => navigation.navigate('Tasks')}
+      />
+    </View>
+  );
 }
 
 const Tab = createMaterialBottomTabNavigator();
@@ -337,17 +317,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 5,
     flex:1,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: "center",
-    alignItems: "center",
-    transform: [{ rotate: "-270deg" }],
-  },
-  fg: {
-    backgroundColor,
-    borderRadius: fgRadius,
-    width: fgRadius * 2,
-    height: fgRadius * 2,
-  },
+  }
 });
