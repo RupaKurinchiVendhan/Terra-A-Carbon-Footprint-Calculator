@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Component} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, TextInput, SafeAreaView } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Header from './components/Header';
@@ -16,7 +16,22 @@ import ActivityRings, {ActivityRingsData, ActivityRingsConfig} from "react-nativ
 import { getNews } from './src/news';
 import Articles from './src/components/Articles';
 import Feed from './Feed';
+
+import AppIntroSlider from 'react-native-app-intro-slider';
+
+import { AppearanceProvider, Appearance } from "react-native-appearance";
+import WalkthroughScreen from "./src/screens/WalkthroughScreen/WalkthroughScreen";
+import WalkthroughAppConfig from "./src/WalkthroughAppConfig";
+import DynamicAppStyles from "./src/DynamicAppStyles";
+
+// import * as $ from "jquery";
 // import Accomplishments from './Accomplishments';
+
+// const express = require("express");
+// const {spawn} = require("child_process");
+// const app = express();
+
+
 
 
 const fetchFonts = () => {
@@ -29,22 +44,54 @@ const fetchFonts = () => {
   });
 };
 
+// function footprint_calculator() {
+//   var myPythonScriptPath = 'test.py';
+//
+//   var PythonShell = require('python-shell');
+//   var pyshell = new PythonShell(myPythonScriptPath);
+//   var options = {
+//     mode: 'text'
+//   }
+//
+//   PythonShell.run('test.py', options, function(err, results) {
+//     if (err) throw err;
+//     console.log('results: %j', results);
+//   });
+//
+//   return (
+//     null
+//   );
+// }
 
 function NewsScreen({ navigation }) {
-  return (
-    <Feed/>
-    // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    //   <Text style={styles.titleText}>
-    //     Welcome!
-    //   </Text>
-    //   <Text style={styles.mainText}>
-    //     Ready to start living a sustainable lifestyle?
-    //   </Text>
-    //   <Button
-    //     title="Go to Tasks"
-    //     onPress={() => navigation.navigate('Tasks')}
-    //   />
-    // </View>
+    // <Feed/>
+    const [text, setName] = React.useState("Useless Text");
+    const [number, setNumber] = React.useState(null);
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={styles.titleText}>
+          Welcome!
+        </Text>
+        <Text style={styles.mainText}>
+          Ready to start living a sustainable lifestyle?
+        </Text>
+        <TextInput
+          style={styles.titleText}
+          placeholder="useless placeholder"
+          onChangeText={(val) => setNumber(val)}
+          value = {number}
+        />
+        <TextInput
+          style={styles.titleText}
+          placeholder="useless placeholder"
+          onChangeText={(val) => setNumber(val)}
+          value2 = {number}
+        />
+        // <Button
+        //   title="Go to Tasks"
+        //   onPress={() => ()}
+        // />
+      </View>
   );
 }
 
@@ -102,22 +149,22 @@ function TasksScreen() {
     );
 }
 
-function AccountScreen() {
+function AccountScreen({ navigation }) {
   const activityData = [
   {
     label: "Transportation",
     value: 0.8,
+    color: "#006400",
+  },
+  {
+    label: "Waste",
+    value: 0.6,
     color: "#69941c",
   },
   {
-    label: "Recyclying",
-    value: 0.6,
-    color: "#9dc9d1",
-  },
-  {
-    label: "RINGS",
+    label: "Utilities",
     value: 0.2,
-    color: "#86040f",
+    color: "#9dc9d1",
     backgroundColor: "#cccccc"
   }
   ];
@@ -128,12 +175,12 @@ function AccountScreen() {
   };
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <ActivityRings legend={true} data={activityData} config={activityConfig} />
+      <ActivityRings theme={"light"} legend={true} data={activityData} config={activityConfig} />
       <Text style={styles.titleText}>
 
       </Text>
       <Text style={styles.mainText}>
-        Ready to start living a sustainable lifestyle?
+        You're doing great!
       </Text>
       <Button
         title="Go to Tasks"
@@ -205,19 +252,6 @@ function MyTabs() {
   );
 }
 
-// function fonts() {
-//   const [dataLoaded, setDataLoaded] = useState(false);
-//
-//   if (!dataLoaded) {
-//     return(
-//       <AppLoading
-//         startAsync={fetchFonts}
-//         onFinish={() => setDataLoaded(true)}
-//       />
-//     )
-//   }
-// }
-
 export default function App() {
   const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -228,7 +262,8 @@ export default function App() {
         onFinish={() => setDataLoaded(true)}
       />
     )
-  }
+  };
+
   return (
     <NavigationContainer>
       <MyTabs />
@@ -236,7 +271,96 @@ export default function App() {
   );
 }
 
+// export default class App extends Component {
+//   // const [dataLoaded, setDataLoaded] = useState(false);
+//
+//   // const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+//
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//         show_Main_App: false
+//     };
+//   }
+//
+//   on_Done_all_slides = () => {
+//     this.setState({ show_Main_App: true });
+//   };
+//   on_Skip_slides = () => {
+//     this.setState({ show_Main_App: true });
+//   };
+//
+//   // useEffect(() => {
+//   //   Appearance.addChangeListener(({ colorScheme }) => {
+//   //     setColorScheme(colorScheme);
+//   //   });
+//   // });
+//
+//   // if (!dataLoaded) {
+//   //   return(
+//   //     <AppLoading
+//   //       startAsync={fetchFonts}
+//   //       onFinish={() => setDataLoaded(true)}
+//   //     />
+//   //   )
+//   // };
+//
+//   render() {
+//     if (this.state.show_Main_App) {
+//       return (
+//         <NavigationContainer>
+//             <MyTabs />
+//         </NavigationContainer>
+//         // <View style={styles.MainContainer}>
+//         //   <Text style={{ textAlign: 'center', fontSize: 20, color: '#000' }}>
+//         //       This is your main App screen After App Walkthrough.
+//         //   </Text>
+//         // </View>
+//       );
+//     }
+//     else {
+//       return (
+//         <AppIntroSlider slides={slides} onDone={this.on_Done_all_slides}
+//           showSkipButton={true}
+//           onSkip={this.on_Skip_slides} />
+//         // <AppearanceProvider>
+//         //     <WalkthroughScreen
+//         //       appConfig={WalkthroughAppConfig}
+//         //       appStyles={DynamicAppStyles}
+//         //     />
+//         // </AppearanceProvider>
+//         );
+//     }
+//   // }
+//   }
+// }
+
+
+
 const styles = StyleSheet.create({
+  MainContainer: {
+    flex: 1,
+    paddingTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20
+   },
+   title: {
+    fontSize: 26,
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+   },
+   text: {
+    color: '#fff',
+    fontSize: 20,
+   },
+   image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -319,3 +443,56 @@ const styles = StyleSheet.create({
     flex:1,
   }
 });
+
+// const slides = [
+//   {
+//     key: 'k1',
+//     title: 'Ecommerce Leader',
+//     text: 'Best ecommerce in the world',
+//     image: {
+//       uri:
+//         'https://i.imgur.com/jr6pfzM.png',
+//     },
+//     titleStyle: styles.title,
+//     textStyle: styles.text,
+//     imageStyle: styles.image,
+//     backgroundColor: '#F7BB64',
+//   },
+//   {
+//     key: 'k2',
+//     title: 'fast delivery',
+//     text: 'get your order insantly fast',
+//     image: {
+//       uri:
+//         'https://i.imgur.com/au4H7Vt.png',
+//     },
+//     titleStyle: styles.title,
+//     textStyle: styles.text,
+//     imageStyle: styles.image,
+//     backgroundColor: '#F4B1BA',
+//   },
+//   {
+//     key: 'k3',
+//     title: 'many store ',
+//     text: 'Multiple store location',
+//     image: {
+//       uri: 'https://i.imgur.com/bXgn893.png',
+//     },
+//     titleStyle: styles.title,
+//     textStyle: styles.text,
+//     imageStyle: styles.image,
+//     backgroundColor: '#4093D2',
+//   },
+//   {
+//     key: 'k4',
+//     title: '24 hours suport',
+//     text: ' Get Support 24 Hours with Real Human',
+//     image: {
+//       uri: 'https://i.imgur.com/mFKL47j.png',
+//     },
+//     titleStyle: styles.title,
+//     textStyle: styles.text,
+//     imageStyle: styles.image,
+//     backgroundColor: '#644EE2',
+//   }
+// ];
