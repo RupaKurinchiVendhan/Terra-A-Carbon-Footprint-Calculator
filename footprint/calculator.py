@@ -4,9 +4,13 @@ class Calculator:
     
     def __init__(self, list):
         self.transportation_score = 0
+        self.max_transportation = 55
         self.waste_score = 0
+        self.max_waste = 110
         self.utility_score = 0
+        self.max_utility = 30
         self.answers = list
+        self.tiers = {}
 
         transportation_list = list[:3]
         waste_list = list[3:9]
@@ -14,6 +18,9 @@ class Calculator:
         self.transportation(transportation_list)
         self.waste(waste_list)
         self.utility(utility_list)
+
+        self.total_score = self.transportation_score + self.waste_score + self.utility_score
+        self.max_total = self.max_transportation + self.max_waste + self.max_utility
 
     def transportation(self, list):
         """
@@ -50,7 +57,7 @@ class Calculator:
             self.transportation_score += 20
     
     def get_transportation(self):
-        return self.transportation_score
+        return '%.2f'%(float(self.transportation_score) / self.max_transportation * 100)
 
     def waste(self, list):
         """
@@ -107,7 +114,7 @@ class Calculator:
         self.waste_score -= 4 * list[5]
     
     def get_waste(self):
-        return self.waste_score
+        return '%.2f'%(float(self.waste_score) / self.max_waste * 100)
 
     def utility(self, list):
         """
@@ -148,12 +155,33 @@ class Calculator:
             self.utility_score += 1
 
     def get_utility(self):
-        return self.utility_score
+        return '%.2f'%(float(self.utility_score) / self.max_utility * 100)
 
-    def goal_update(self, ):
-        """ Completing a goal: subtract points?
-        """
+    def tier(self):
+        percent = self.get_transportation()
+        tier(percent, "transportation")
+        percent = self.get_waste()
+        tier(percent, "waste")
+        percent = self.get_utility()
+        tier(percent, "utility")
+        return self.tiers
+    
+    def tier(self, percentage, category):
+        if percent > 75:
+            self.tiers[category] = ["poor"]
+        elif percent > 50:
+            self.tiers[category] = ["average"]
+        elif percent > 25:
+            self.tiers[category] = ["good"]
+        elif percent >= 0:
+            self.tiers[category] = ["excellent"]
+
+
+    # def goal_update(self, ):
+    #     """ Completing a goal: subtract points?
+    #     """
 
 
 
 if __name__ == '__main__':
+    
