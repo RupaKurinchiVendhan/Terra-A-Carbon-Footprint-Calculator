@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
+import { CheckBox } from 'react-native-elements';
 import {Component} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -81,12 +82,46 @@ function get_transportation() {
     return '%.2f'%(transportation_score / max_transportation);
 }
 
+flight_options = [
+  {id:0, choice: 'Never or rarely'},
+  {id:1, choice: 'Short distances (within state)'},
+  {id:2, choice: 'Further distances (nearby state or country)'},
+  {id:3, choice: 'Far (another continent)'},
+]
+function MultipleSelect({options, callback}) {
+  const [selected, setSelected] = useState(0);
+  return (
+    <View>
+      {options.map((answer) => (
+        <CheckBox
+          center
+          key={answer.id}
+          title={answer.choice}
+          checkedIcon='dot-circle-o'
+          uncheckedIcon='circle-o'
+          checked={answer.id == selected}
+          onPress={() => {setSelected(answer.id); callback(answer.choice)}}
+         />
+        ))}
+    </View>
+  )
+}
 class TranspoDiagnostic extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: '', sliderValue: 0 };
+    this.state = {
+      car_mileage: 0,
+      public_trans_mileage: 0,
+      flight_mileage: 0
+    };
   }
+
+  updateFlight = (idx) => {
+    this.setState({flight_mileage: idx})
+  }
+
   render () {
+
     return (
       <View>
         <Text style={styles.title}>
@@ -100,8 +135,32 @@ class TranspoDiagnostic extends Component {
          step={1}
          minimumValue={0}
          maximumValue={100000}
-         value={this.state.sliderValue}
-         onValueChange={val => this.setState({ sliderValue: val })}
+         value={this.state.car_mileage}
+         onValueChange={val => this.setState({ car_mileage: val })}
+        />
+        <Text style={styles.response}>
+          {(Math.round(this.state.car_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
+        </Text>
+        <Text style={styles.question}>
+          How many miles of public transportation?
+        </Text>
+        <Slider
+         style={{ width: 300 }}
+         step={1}
+         minimumValue={0}
+         maximumValue={100000}
+         value={this.state.public_trans_mileage}
+         onValueChange={val => this.setState({ public_trans_mileage: val })}
+        />
+        <Text style={styles.response}>
+          {(Math.round(this.state.public_trans_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
+        </Text>
+        <Text style={styles.question}>
+          How far do you usually fly?
+        </Text>
+        <MultipleSelect
+          options={flight_options}
+          callback={this.updateFlight}
         />
         <Text style={styles.taskText}>
           {this.state.sliderValue}
