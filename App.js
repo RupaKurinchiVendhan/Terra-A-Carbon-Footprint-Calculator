@@ -86,7 +86,10 @@ const fetchFonts = () => {
 // }
 
 function NewsScreen({ navigation }) {
-  <Diagnostic/>
+  return (
+    <Diagnostic/>
+  );
+
     // <Feed/>
   //   const [text, setName] = React.useState("Useless Text");
   //   const [number, setNumber] = React.useState(null);
