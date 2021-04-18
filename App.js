@@ -53,17 +53,17 @@ function AccountScreen({ navigation }) {
   const activityData = [
   {
     label: "Transportation",
-    value: transportation / max_transportation + 0.8,
+    value: transportation / max_transportation,
     color: "#006400",
   },
   {
     label: "Waste",
-    value: waste / max_waste + 0.4,
+    value: waste / max_waste,
     color: "#69941c",
   },
   {
     label: "Utilities",
-    value: utility / max_utility + 0.6,
+    value: utility / max_utility,
     color: "#9dc9d1",
     backgroundColor: "#cccccc"
   }
