@@ -5,12 +5,14 @@ import {Component} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, TextInput, SafeAreaView, ScrollView } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, TextInput, SafeAreaView, ScrollView, Animated } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Footprint_Calculator from './assets/Footprint_Calculator';
 import Modal from 'react-native-modal';
 import ActivityRings, {ActivityRingsData, ActivityRingsConfig} from "react-native-activity-rings"; //, {ActivityRingsData, ActivityRingsConfig}
+import {Slider} from 'react-native-elements';
+
 
 var transportation_score = 0;
 var waste_score = 0;
@@ -84,15 +86,18 @@ function get_transportation() {
 }
 
 export default class Diagnostic extends Component {
+
+
   state = {
       transportation: 0,
       waste: 0,
-      utility: 0
+      utility: 0,
+      car_transportation: 0
    }
    handleCarTransportation = (number) => {
      var car_t = car_transportation(number);
       this.setState({ transporation: car_t})
-      console.log(car_t);
+      // console.log(car_t);
    }
    handlePublicTransportation = (number) => {
       this.setState({ transporation: public_transportation(number) })
@@ -101,6 +106,7 @@ export default class Diagnostic extends Component {
       this.setState({ transporation: flight_transportation(number) })
    }
    render() {
+      const [car_mileage, setCarMileage] = useState(0);
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.scrollView}>
@@ -119,6 +125,13 @@ export default class Diagnostic extends Component {
             <Text style={styles.mainText}>
               "description"
             </Text>
+            <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+              <Slider
+                value={this.state.car_transportation}
+                onValueChange={(value) => this.handleCarTransportation({ value })}
+              />
+              <Text>Value: {this.state.value}</Text>
+            </View>
             <TextInput style = {styles.input}
                 underlineColorAndroid = "transparent"
                 placeholder = "Miles"

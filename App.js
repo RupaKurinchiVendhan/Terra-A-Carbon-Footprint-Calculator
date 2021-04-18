@@ -9,7 +9,7 @@ import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, Text
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Header from './components/Header';
-import Challenge from './components/Challenge';
+import ChallengeList from './components/Challenge';
 import Diagnostic from './components/Diagnostic';
 import Footprint_Calculator from './components/assets/Footprint_Calculator';
 import Modal from 'react-native-modal';
@@ -143,6 +143,8 @@ function NewsScreen({ navigation }) {
 }
 
 function TasksScreen() {
+
+
     const [challenges, setChallenges] = useState([
       {text: 'Eat on tiny plates to limit portion sizes and eliminate food waste.', modal: "A study performed by Roskilde University revealed that if the plate size is reduced by just 9%, the food waste can be reduced by over 25%. In other words, by reducing the size of the plate, you ensure that you don't over feed yourself or the trash bin!", source: require('./assets/plates.png'), key: 1},
       {text: 'Allow for more white space in your fridge.', modal: 'Oftentimes, we fill up our shopping carts so that we can fill up our fridge. Leaving white space in your refrigerator is a great way to limit food waste by making sure that you get a chance to eat everything you buy.', source: require('./assets/fridge.png'), key: 2},
@@ -160,36 +162,22 @@ function TasksScreen() {
       {text: "If you can walk or bike there, don't drive.", modal: 'sdfljskdflskdjf', source: require('./assets/walk.png'), key: 14}
     ]);
 
-    const pressHandler = (key) => {
-        setChallenges(prevChallenges => {
-          return prevChallenges.filter(challenge => challenge.key != key);
-        });
+    const renderItem = ({ item }) => {
+      return (
+        <Challenge
+          item={item}
+        />
+      );
     };
 
     return (
       <View style={styles.container}>
         <Header />
           <View style={styles.list}>
-              <FlatList contentInset= {{bottom: 80}}
+              <FlatList
+                contentInset= {{bottom: 80}}
                 data={challenges}
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => pressHandler(item.key)}>
-                        <View style={styles.list}>
-                            <Text style={styles.item}>
-                            <Text style={styles.taskText}>
-                              {"    "}
-                              {item.text}
-                              {"\n"}{"\n"}{"      "}
-                            </Text>
-                            <Image
-                              style={styles.tinyLogo}
-                              source={item.source}
-                            />
-                              <Text style={styles.mainText}>{"\n"}{item.modal}</Text>
-                            </Text>
-                        </View>
-                  </TouchableOpacity>
-                )}
+                renderItem={renderItem}
               />
           </View>
       </View>
@@ -275,7 +263,7 @@ function MyTabs() {
        />
        <Tab.Screen
          name="Tasks"
-         component={TasksScreen}
+         component={ChallengeList}
          options={{
            tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> Tasks </Text>,
            // tabBarColor: '#9dc9d1',
@@ -381,6 +369,7 @@ export default function App() {
 //   // }
 //   }
 // }
+
 
 
 
