@@ -5,13 +5,13 @@ import {Component} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, TextInput, SafeAreaView, ScrollView, Animated } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, TextInput, SafeAreaView, ScrollView, Animated, Slider } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Footprint_Calculator from './assets/Footprint_Calculator';
 import Modal from 'react-native-modal';
 import ActivityRings, {ActivityRingsData, ActivityRingsConfig} from "react-native-activity-rings"; //, {ActivityRingsData, ActivityRingsConfig}
-import {Slider} from 'react-native-elements';
+
 
 
 var transportation_score = 0;
@@ -101,18 +101,17 @@ class WasteDiagnostic extends Component {
         <Text style={styles.question}>
           How many days a week do you eat meat?
         </Text>
+      </View>
     );
   }
 }
 
 export default class Diagnostic extends Component {
-
-
   state = {
       transportation: 0,
       waste: 0,
       utility: 0,
-      car_transportation: 0
+      meat: 0
    }
    handleCarTransportation = (number) => {
      var car_t = car_transportation(number);
@@ -139,26 +138,22 @@ export default class Diagnostic extends Component {
             <Text style={styles.mainText}>
               Let's start by answering a few questions.
             </Text>
-            <Text style={styles.titleText}>
-              How many miles do you drive in your car?
-            </Text>
-            <Text style={styles.mainText}>
-              "description"
-            </Text>
-            <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
-              <Slider
-                value={this.state.car_transportation}
-                onValueChange={(value) => this.handleCarTransportation({ value })}
-              />
-              <Text>Value: {this.state.value}</Text>
-            </View>
-            <TextInput style = {styles.input}
-                underlineColorAndroid = "transparent"
-                placeholder = "Miles"
-                placeholderTextColor = "#9a73ef"
-                autoCapitalize = "none"
-                onChangeText = {this.handleCarTransportation}/>
-
+            // <Text style={styles.titleText}>
+            //   How many miles do you drive in your car?
+            // </Text>
+            // <Text style={styles.mainText}>
+            //   "description"
+            // </Text>
+            <WasteDiagnostic/>
+            <Slider
+               style={{ width: 300 }}
+               step={1}
+               minimumValue={18}
+               maximumValue={71}
+               value={this.state.meat}
+               onValueChange={val => this.setState({ meat: val })}
+               onSlidingComplete={ val => this.getVal(val)}
+            />
           </ScrollView>
         </SafeAreaView>
          // <View style = {styles.container}>
@@ -204,7 +199,21 @@ export default class Diagnostic extends Component {
             //    <Text style = {styles.submitButtonText}> Submit </Text>
             // </TouchableOpacity>
 
-      )
+
+            // <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+            //   <Slider
+            //     value={this.state.car_transportation}
+            //     onValueChange={(value) => this.handleCarTransportation({ value })}
+            //   />
+            //   <Text>Value: {this.state.value}</Text>
+            // </View>
+            // <TextInput style = {styles.input}
+            //     underlineColorAndroid = "transparent"
+            //     placeholder = "Miles"
+            //     placeholderTextColor = "#9a73ef"
+            //     autoCapitalize = "none"
+            //     onChangeText = {this.handleCarTransportation}/>
+      );
    }
 }
 
