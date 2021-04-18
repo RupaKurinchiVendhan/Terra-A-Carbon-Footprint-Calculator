@@ -32,16 +32,16 @@ function car_transportation(car) {
 
     // miles of car usage per year
     if (car > 15000) {
-        transportation_score += 15;
+        transportation_score = 15;
     }
     else if (car > 10000) {
-        transportation_score += 10;
+        transportation_score = 10;
     }
     else if (car > 1000) {
-        transportation_score += 6;
+        transportation_score = 6;
     }
     else if (car > 0) {
-        transportation_score += 4;
+        transportation_score = 4;
     }
 
     return transportation_score;
@@ -50,19 +50,19 @@ function car_transportation(car) {
 function public_transportation(buses) {
     // miles of public transportation usage per year
     if (buses > 20000) {
-        transportation_score += 20;
+        transportation_score = 20;
     }
     else if (buses > 15000) {
-        transportation_score += 10;
+        transportation_score = 10;
     }
     else if (buses > 10000) {
-        transportation_score += 6;
+        transportation_score = 6;
     }
     else if (buses > 1000) {
-        transportation_score += 4;
+        transportation_score = 4;
     }
     else if (buses > 0) {
-        transportation_score += 2;
+        transportation_score = 2;
     }
     return transportation_score;
 }
@@ -70,13 +70,16 @@ function public_transportation(buses) {
 function flight_transportation(flight) {
     // flight distance per year
     if (flight == 0) {
-        transportation_score += 2;
+        transportation_score = 0;
     }
     else if (flight == 1) {
-        transportation_score += 6;
+        transportation_score = 2;
     }
     else if (flight == 2) {
-        transportation_score += 20;
+        transportation_score = 6;
+    }
+    else if (flight == 3) {
+        transportation_score = 20;
     }
     return transportation_score;
 }
@@ -103,7 +106,7 @@ function MultipleSelect({options, callback}) {
           checkedIcon='dot-circle-o'
           uncheckedIcon='circle-o'
           checked={answer.id == selected}
-          onPress={() => {setSelected(answer.id); callback(answer.choice)}}
+          onPress={() => {setSelected(answer.id); callback(answer.id)}}
          />
         ))}
     </View>
@@ -121,6 +124,11 @@ class TranspoDiagnostic extends Component {
 
   updateFlight = (idx) => {
     this.setState({flight_mileage: idx})
+    this.onUpdate()
+  }
+
+  onUpdate = () => {
+    this.props.callback(this.state)
   }
 
   render () {
@@ -139,7 +147,7 @@ class TranspoDiagnostic extends Component {
          minimumValue={0}
          maximumValue={100000}
          value={this.state.car_mileage}
-         onValueChange={val => this.setState({ car_mileage: val })}
+         onValueChange={val => {this.setState({ car_mileage: val }); this.onUpdate()}}
         />
         <Text style={styles.response}>
           {(Math.round(this.state.car_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
@@ -153,7 +161,7 @@ class TranspoDiagnostic extends Component {
          minimumValue={0}
          maximumValue={100000}
          value={this.state.public_trans_mileage}
-         onValueChange={val => this.setState({ public_trans_mileage: val })}
+         onValueChange={val => {this.setState({ public_trans_mileage: val }), this.onUpdate()}}
         />
         <Text style={styles.response}>
           {(Math.round(this.state.public_trans_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
@@ -176,19 +184,18 @@ export default class Diagnostic extends Component {
       transportation: 0,
       waste: 0,
       utility: 0,
-      car_transportation: 0
    }
-   handleCarTransportation = (number) => {
-     var car_t = car_transportation(number);
-      this.setState({ transporation: car_t})
-      // console.log(car_t);
+
+   calculateTranspo = (res) => {
+     var trans_score = car_transportation(res.car_mileage) + public_transportation(res.public_trans_mileage) + flight_transportation(res.flight_mileage)
+     this.setState({transportation:trans_score})
    }
-   handlePublicTransportation = (number) => {
-      this.setState({ transporation: public_transportation(number) })
+
+   onSubmit = () => {
+     console.log(this.state)
+     this.props.callback({new_input:this.state})
    }
-   handleFlightTransportation = (number) => {
-      this.setState({ transporation: flight_transportation(number) })
-   }
+
    render() {
       return (
         <SafeAreaView style={styles.container}>
@@ -202,8 +209,14 @@ export default class Diagnostic extends Component {
             <Text style={styles.mainText}>
               Let's start by answering a few questions.
             </Text>
-            <TranspoDiagnostic/>
-
+            <TranspoDiagnostic callback={this.calculateTranspo}/>
+            <TouchableOpacity
+               style = {styles.submitButton}
+               onPress = {
+                  () => this.onSubmit()
+               }>
+               <Text style = {styles.submitButtonText}> Submit </Text>
+            </TouchableOpacity>
           </ScrollView>
         </SafeAreaView>
 

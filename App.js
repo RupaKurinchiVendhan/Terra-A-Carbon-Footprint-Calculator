@@ -33,9 +33,11 @@ import DynamicAppStyles from "./src/DynamicAppStyles";
 // const {spawn} = require("child_process");
 // const app = express();
 
-// var transportation = 0;
-// var waste = 0;
-// var utility = 0;
+var transportation = 0;
+var waste = 0;
+var utility = 0;
+
+var max_transportation = 55;
 
 function add(a, b) {
   return (a + b);
@@ -84,10 +86,18 @@ const fetchFonts = () => {
 //     null
 //   );
 // }
+function updateVals({new_input}) {
+  console.log(new_input)
+   transportation = new_input.transportation
+   waste = new_input.waste
+   utility = new_input.utility
+}
 
-function NewsScreen({ navigation }) {
+function DiagnosticTest({ navigation }) {
   return (
-    <Diagnostic/>
+    <Diagnostic
+      callback={updateVals}
+    />
   );
 
     // <Feed/>
@@ -146,7 +156,7 @@ function AccountScreen({ navigation }) {
   const activityData = [
   {
     label: "Transportation",
-    value: get_transportation(),
+    value: transportation / max_transportation,
     color: "#006400",
   },
   {
@@ -210,7 +220,7 @@ function MyTabs() {
       >
       <Tab.Screen
         name="News"
-        component={NewsScreen}
+        component={DiagnosticTest}
         options={{
           tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> News </Text>,
           // tabBarColor: '#69941c',
