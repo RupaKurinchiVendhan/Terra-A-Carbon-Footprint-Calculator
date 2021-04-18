@@ -29,16 +29,16 @@ function car_transportation(car) {
 
     // miles of car usage per year
     if (car > 15000) {
-        transportation_score += 15;
+        transportation_score = 15;
     }
     else if (car > 10000) {
-        transportation_score += 10;
+        transportation_score = 10;
     }
     else if (car > 1000) {
-        transportation_score += 6;
+        transportation_score = 6;
     }
     else if (car > 0) {
-        transportation_score += 4;
+        transportation_score = 4;
     }
 
     return transportation_score;
@@ -47,19 +47,19 @@ function car_transportation(car) {
 function public_transportation(buses) {
     // miles of public transportation usage per year
     if (buses > 20000) {
-        transportation_score += 20;
+        transportation_score = 20;
     }
     else if (buses > 15000) {
-        transportation_score += 10;
+        transportation_score = 10;
     }
     else if (buses > 10000) {
-        transportation_score += 6;
+        transportation_score = 6;
     }
     else if (buses > 1000) {
-        transportation_score += 4;
+        transportation_score = 4;
     }
     else if (buses > 0) {
-        transportation_score += 2;
+        transportation_score = 2;
     }
     return transportation_score;
 }
@@ -67,19 +67,168 @@ function public_transportation(buses) {
 function flight_transportation(flight) {
     // flight distance per year
     if (flight == 0) {
-        transportation_score += 2;
+        transportation_score = 0;
     }
     else if (flight == 1) {
-        transportation_score += 6;
+        transportation_score = 2;
     }
     else if (flight == 2) {
-        transportation_score += 20;
+        transportation_score = 6;
+    }
+    else if (flight == 3) {
+        transportation_score = 20;
     }
     return transportation_score;
 }
 
 function get_transportation() {
     return '%.2f'%(transportation_score / max_transportation);
+}
+
+function meat_waste(meat) {
+
+    // Meat per week
+    if (meat == 7) {
+        waste_score = 10;
+    }
+    else if (meat > 2) {
+        waste_score = 8;
+    }
+    else if (meat > 0) {
+        waste_score = 5;
+    }
+    return waste_score;
+}
+
+function vegan_waste(vegan) {
+    // Vegan y/n
+    if (vegan == 1) {
+        waste_score = 2;
+    }
+    else if (vegan == 0 && vegan == 0) {
+        waste_score = 4;
+    }
+    return waste_score;
+}
+
+function diet_waste(diet) {
+    // Diet type (prepackaged, fresh, mix)
+    if (diet == 0) {
+        waste_score = 12;
+    }
+    else if (diet == 1) {
+        waste_score = 6;
+    }
+    else if (diet == 2) {
+        waste_score = 2;
+    }
+    return waste_score;
+}
+
+function appliance_waste(appliance) {
+    // Household purchases per year
+    if (appliance > 7) {
+        waste_score = 10;
+    }
+    else if (appliance > 5) {
+        waste_score = 8;
+    }
+    else if (appliance > 3) {
+        waste_score = 6;
+    }
+    else if (appliance > 0) {
+        waste_score = 4;
+    }
+    else {
+        waste_score += 2;
+    }
+    return waste_score;
+}
+
+function trash_waste(trash) {
+    // Trash cans filled per week
+    if (trash >= 4) {
+        waste_score = 50;
+    }
+    else if (trash == 3) {
+        waste_score = 40;
+    }
+    else if (trash == 2) {
+        waste_score = 30;
+    }
+    else if (trash == 1) {
+        waste_score = 20;
+    }
+    else {
+        waste_score = 5;
+    }
+    return waste_score;
+}
+
+function recycle_waste(recycle) {
+    // Types of waste recycled:
+    waste_score += 24;
+    waste_score -= 4 * recycle;
+
+    return waste_score;
+}
+
+function people_utility(people) {
+
+   // People in household
+   if (people > 5) {
+       utility_score = 2;
+   }
+   else if (people == 5) {
+       utility_score = 4;
+   }
+   else if (people == 4) {
+       utility_score = 6;
+   }
+   else if (people == 3) {
+       utility_score = 8;
+   }
+   else if (people == 2) {
+       utility_score = 10;
+   }
+   else if (people == 1) {
+       utility_score = 12;
+   }
+   else {
+       utility_score = 14;
+   }
+   return utility_score;
+}
+
+function house_utility(house) {
+   // House size
+   if (house == 0) {
+       utility_score = 10;
+   }
+   else if (house == 1) {
+       utility_score = 7;
+   }
+   else if (house == 2) {
+       utility_score = 4;
+   }
+   else {
+       utility_score = 2;
+   }
+   return utility_score;
+}
+
+function water_utility(water) {
+   // Water usage per week
+   if (water > 18) {
+       utility_score += 6;
+   }
+   else if (water > 8) {
+       utility_score += 4;
+   }
+   else if (water >= 1) {
+       utility_score += 1;
+   }
+   return utility_score;
 }
 
 flight_options = [
@@ -114,7 +263,7 @@ function MultipleSelect({options, callback}) {
           checkedIcon='dot-circle-o'
           uncheckedIcon='circle-o'
           checked={answer.id == selected}
-          onPress={() => {setSelected(answer.id); callback(answer.choice)}}
+          onPress={() => {setSelected(answer.id); callback(answer.id)}}
          />
         ))}
     </View>
@@ -133,6 +282,11 @@ class TranspoDiagnostic extends Component {
 
   updateFlight = (idx) => {
     this.setState({flight_mileage: idx})
+    this.onUpdate()
+  }
+
+  onUpdate = () => {
+    this.props.callback(this.state)
   }
 
   render () {
@@ -151,7 +305,7 @@ class TranspoDiagnostic extends Component {
          minimumValue={0}
          maximumValue={100000}
          value={this.state.car_mileage}
-         onValueChange={val => this.setState({ car_mileage: val })}
+         onValueChange={val => {this.setState({ car_mileage: val }); this.onUpdate()}}
         />
         <Text style={styles.taskText2}>
           {(Math.round(this.state.car_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
@@ -165,7 +319,7 @@ class TranspoDiagnostic extends Component {
          minimumValue={0}
          maximumValue={100000}
          value={this.state.public_trans_mileage}
-         onValueChange={val => this.setState({ public_trans_mileage: val })}
+         onValueChange={val => {this.setState({ public_trans_mileage: val }), this.onUpdate()}}
         />
         <Text style={styles.taskText2}>
           {(Math.round(this.state.public_trans_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
@@ -198,6 +352,10 @@ class WasteDiagnostic extends Component {
 
   updateVegan = (idx) => {
     this.setState({vegan: idx})
+  }
+
+  onUpdate = () => {
+    this.props.callback(this.state)
   }
 
   render() {
@@ -279,12 +437,16 @@ class UtilDiagnostic extends Component {
   constructor(props) {
     super(props);
     this.state = {roommates: 0};
-    this.state = {house: 'No'};
+    this.state = {house: 0};
     this.state = {washing: 0};
   }
 
   updateHouse = (idx) => {
     this.setState({house: idx})
+  }
+
+  onUpdate = () => {
+    this.props.callback(this.state)
   }
 
   render() {
@@ -338,19 +500,28 @@ export default class Diagnostic extends Component {
       transportation: 0,
       waste: 0,
       utility: 0,
-      meat: 0
    }
-   handleCarTransportation = (number) => {
-     var car_t = car_transportation(number);
-      this.setState({ transporation: car_t})
-      // console.log(car_t);
+
+   calculateTranspo = (res) => {
+     var trans_score = car_transportation(res.car_mileage) + public_transportation(res.public_trans_mileage) + flight_transportation(res.flight_mileage)
+     this.setState({transportation:trans_score})
    }
-   handlePublicTransportation = (number) => {
-      this.setState({ transporation: public_transportation(number) })
+
+   calculateWaste = (res) => {
+     var w_score = meat_waste(res.meat) + vegan_waste(res.vegan) + diet_waste(res.packaging) + appliance_waste(res.appliances) + trash_waste(res.trash) + recycle_waste(res.recycle)
+     this.setState({waste:w_score})
    }
-   handleFlightTransportation = (number) => {
-      this.setState({ transporation: flight_transportation(number) })
+
+   calculateUtility = (res) => {
+     var ut_score = people_utility_waste(res.roommates) + house_utility(res.house) + water_utility(res.water)
+     this.setState({utility:ut_score})
    }
+
+   onSubmit = () => {
+     console.log(this.state)
+     this.props.callback({new_input:this.state})
+   }
+
    render() {
       return (
         <SafeAreaView style={styles.container}>
@@ -364,72 +535,21 @@ export default class Diagnostic extends Component {
             <Text style={styles.mainText}>
               Let's start by answering a few questions.
             </Text>
-            <TranspoDiagnostic/>
-            <WasteDiagnostic/>
-            <UtilDiagnostic/>
+            <TranspoDiagnostic callback={this.calculateTranspo}/>
+            <WasteDiagnostic callback={this.calculateWaste}/>
+            <UtilDiagnostic callback={this.calculateUtility}/>
+            <TouchableOpacity
+               style = {styles.submitButton}
+               onPress = {
+                  () => this.onSubmit()
+               }>
+               <Text style = {styles.title}> Submit </Text>
+            </TouchableOpacity>
           </ScrollView>
         </SafeAreaView>
-
-
-            // <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
-            //   <Slider
-            //     value={this.state.car_transportation}
-            //     onValueChange={(value) => this.handleCarTransportation({ value })}
-            //   />
-            //   <Text>Value: {this.state.value}</Text>
-            // </View>
-            // <TextInput style = {styles.input}
-            //     underlineColorAndroid = "transparent"
-            //     placeholder = "Miles"
-            //     placeholderTextColor = "#9a73ef"
-            //     autoCapitalize = "none"
-            //     onChangeText = {this.handleCarTransportation}/>
       );
    }
 }
-
- // <View style = {styles.container}>
- //   <Text style={styles.titleText}>
- //     Welcome!
- //   </Text>
- //   <Text style={styles.mainText}>
- //     Ready to start living a sustainable lifestyle?
- //   </Text>
- //   <Text style={styles.mainText}>
- //     Let's start by answering a few questions. If you don't know the answer, take your best guess!
- //   </Text>
- //   <Text style={styles.titleText}>
- //     How many miles do you drive in your car?
- //   </Text>
- //   <Text style={styles.mainText}>
- //     "description"
- //   </Text>
- //   <TextInput style = {styles.input}
- //       underlineColorAndroid = "transparent"
- //       placeholder = "Miles"
- //       placeholderTextColor = "#9a73ef"
- //       autoCapitalize = "none"
- //       onChangeText = {this.handleCarTransportation}/>
- //   <Text style={styles.titleText}>
- //     How many miles do you use public transportation for?
- //   </Text>
- //   <Text style={styles.mainText}>
- //     "description"
- //   </Text>
- //   <TextInput style = {styles.input}
- //      underlineColorAndroid = "transparent"
- //      placeholder = "Miles"
- //      placeholderTextColor = "#9a73ef"
- //      autoCapitalize = "none"
- //      onChangeText = {this.handlePassword}/>
- // </View>
-    // <TouchableOpacity
-    //    style = {styles.submitButton}
-    //    onPress = {
-    //       () => this.login(this.state.email, this.state.password)
-    //    }>
-    //    <Text style = {styles.submitButtonText}> Submit </Text>
-    // </TouchableOpacity>
 
 const styles = StyleSheet.create({
   MainContainer: {
@@ -472,6 +592,7 @@ const styles = StyleSheet.create({
   },
   mainText: {
     fontFamily: 'assistant-light',
+    textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 18,
@@ -488,17 +609,13 @@ const styles = StyleSheet.create({
   },
   taskText: {
     fontFamily: 'assistant-light',
-    // alignItems: 'center',
     textAlign: 'center',
-    // justifyContent: 'center',
     fontSize: 18,
     color: '#000000',
   },
   taskText2: {
     fontFamily: 'assistant-light',
-    // alignItems: 'center',
     textAlign: 'center',
-    // justifyContent: 'center',
     fontSize: 18,
     color: '#69941c',
   },
@@ -507,7 +624,8 @@ const styles = StyleSheet.create({
     color: '#69941c',
   },
   scrollView: {
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    marginBottom: 30
   },
   button: {
     backgroundColor: 'lightblue',
@@ -529,26 +647,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   item: {
-    // flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
     marginTop: 20,
     borderColor: '#9dc9d1',
     borderWidth: 3,
-    // borderStyle: "dashed",
     borderRadius: 10,
     fontFamily: 'assistant-light',
     fontSize: 18,
-    // alignItems: 'center',
     flex: 1,
-    // justifyContent: 'center'
   },
   tinyLogo: {
     width: 50,
     height: 50,
-    // justifyContent: 'center',
-    // alignItems: 'center'
   },
   list: {
     marginRight: 10,

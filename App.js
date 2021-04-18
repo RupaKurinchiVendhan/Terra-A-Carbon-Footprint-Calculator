@@ -13,48 +13,16 @@ import ChallengeList from './components/Challenge';
 import Diagnostic from './components/Diagnostic';
 import Footprint_Calculator from './components/assets/Footprint_Calculator';
 import Modal from 'react-native-modal';
-import ActivityRings, {ActivityRingsData, ActivityRingsConfig} from "react-native-activity-rings"; //, {ActivityRingsData, ActivityRingsConfig}
-
-import { getNews } from './src/news';
-import Articles from './src/components/Articles';
-import Feed from './Feed';
-
-// import AppIntroSlider from 'react-native-app-intro-slider';
-
-// import { AppearanceProvider, Appearance } from "react-native-appearance";
-// import WalkthroughScreen from "./src/screens/WalkthroughScreen/WalkthroughScreen";
-// import WalkthroughAppConfig from "./src/WalkthroughAppConfig";
+import ActivityRings, {ActivityRingsData, ActivityRingsConfig} from "react-native-activity-rings";
 import DynamicAppStyles from "./src/DynamicAppStyles";
 
-// import * as $ from "jquery";
-// import Accomplishments from './Accomplishments';
+var transportation = 0;
+var waste = 0;
+var utility = 0;
 
-// const express = require("express");
-// const {spawn} = require("child_process");
-// const app = express();
-
-// var transportation = 0;
-// var waste = 0;
-// var utility = 0;
-
-function add(a, b) {
-  return (a + b);
-}
-// class Calculate_Footprint extends Component {
-//   if (cars > 15000) {
-//     transportation += 15;
-//   } else if (cars > 10000) {
-//     transportation += 10;
-//   } else if (cars > 1000) {
-//     transportation += 6;
-//   } else if (cars > 0) {
-//     transportation += 4;
-//   }
-//
-//   return (
-//     transporation
-//   );
-// }
+var max_transportation = 55;
+var max_waste = 110;
+var max_utility = 30;
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -66,97 +34,36 @@ const fetchFonts = () => {
   });
 };
 
-// function footprint_calculator() {
-//   var myPythonScriptPath = 'test.py';
-//
-//   var PythonShell = require('python-shell');
-//   var pyshell = new PythonShell(myPythonScriptPath);
-//   var options = {
-//     mode: 'text'
-//   }
-//
-//   PythonShell.run('test.py', options, function(err, results) {
-//     if (err) throw err;
-//     console.log('results: %j', results);
-//   });
-//
-//   return (
-//     null
-//   );
-// }
+function updateVals({new_input}) {
+  console.log(new_input)
+   transportation = new_input.transportation
+   waste = new_input.waste
+   utility = new_input.utility
+}
 
-function NewsScreen({ navigation }) {
+function DiagnosticTest({ navigation }) {
   return (
-    <Diagnostic/>
+    <Diagnostic
+      callback={updateVals}
+    />
   );
-
-    // <Feed/>
-  //   const [text, setName] = React.useState("Useless Text");
-  //   const [number, setNumber] = React.useState(null);
-  //
-  //
-  //   return (
-  //     // <View style = {styles.container}>
-  //     //       <TextInput style = {styles.input}
-  //     //          underlineColorAndroid = "transparent"
-  //     //          placeholder = "Email"
-  //     //          placeholderTextColor = "#9a73ef"
-  //     //          autoCapitalize = "none"
-  //     //          onChangeText = {this.handleEmail}/>
-  //     //
-  //     //       <TextInput style = {styles.input}
-  //     //          underlineColorAndroid = "transparent"
-  //     //          placeholder = "Password"
-  //     //          placeholderTextColor = "#9a73ef"
-  //     //          autoCapitalize = "none"
-  //     //          onChangeText = {this.handlePassword}/>
-  //     //
-            // <TouchableOpacity
-            //    style = {styles.submitButton}
-            //    onPress = {
-            //       () => this.login(this.state.email, this.state.password)
-            //    }>
-            //    <Text style = {styles.submitButtonText}> Submit </Text>
-            // </TouchableOpacity>
-  //     //    </View>
-  //     // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-  //     //   <Text style={styles.titleText}>
-  //     //     Welcome!
-  //     //   </Text>
-  //     //   <Text style={styles.mainText}>
-  //     //     Ready to start living a sustainable lifestyle?
-  //     //   </Text>
-  //     //   <TextInput
-  //     //     style={styles.titleText}
-  //     //     placeholder="useless placeholder"
-  //     //     onChangeText={(val) => setNumber(val)}
-  //     //     value = {number}
-  //     //   />
-  //     //   <TextInput
-  //     //     style={styles.titleText}
-  //     //     placeholder="useless placeholder"
-  //     //     onChangeText={(val) => setNumber(val)}
-  //     //     value2 = {number}
-  //     //   />
-  //     // </View>
-  // );
 }
 
 function AccountScreen({ navigation }) {
   const activityData = [
   {
     label: "Transportation",
-    value: get_transportation(),
+    value: transportation / max_transportation + 0.8,
     color: "#006400",
   },
   {
     label: "Waste",
-    value: 0.6,
+    value: waste / max_waste + 0.4,
     color: "#69941c",
   },
   {
     label: "Utilities",
-    value: 0.2,
+    value: utility / max_utility + 0.6,
     color: "#9dc9d1",
     backgroundColor: "#cccccc"
   }
@@ -166,19 +73,33 @@ function AccountScreen({ navigation }) {
     width: 150,
     height: 150
   };
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <ActivityRings theme={"light"} legend={true} data={activityData} config={activityConfig} />
-      <Text style={styles.titleText}>
+      <Text style={styles.mainText}>
+        You're doing great! Keep up the good work.
+      </Text>
+      <Text style={styles.mainText}>
 
       </Text>
       <Text style={styles.mainText}>
-        You're doing great!
+
+      </Text>
+      <ActivityRings theme={"light"} legend={true} data={activityData} config={activityConfig} />
+      <Text style={styles.titleText}>
+
       </Text>
       <Button
         title="Go to Tasks"
         onPress={() => navigation.navigate('Tasks')}
       />
+      <Text style={styles.mainText}>
+        to continue working towards
+      </Text>
+      <Text style={styles.mainText}>
+        lowering your carbon footprint!
+      </Text>
+
     </View>
   );
 }
@@ -210,10 +131,9 @@ function MyTabs() {
       >
       <Tab.Screen
         name="Footprint Calcuator"
-        component={NewsScreen}
+        component={DiagnosticTest}
         options={{
           tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> Calculator </Text>,
-          // tabBarColor: '#69941c',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name = "foot-print" color = {color} size = {26} />
           ),
@@ -224,7 +144,6 @@ function MyTabs() {
          component={ChallengeList}
          options={{
            tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> Tasks </Text>,
-           // tabBarColor: '#9dc9d1',
            tabBarIcon: ({color, size}) => (
              <MaterialCommunityIcons name = "format-list-checks" color = {color} size = {26}/>
            ),
@@ -235,7 +154,6 @@ function MyTabs() {
         component={AccountScreen}
         options={{
           tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> My Progress </Text>,
-          // tabBarColor: '#9dc9d1',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name = "account-circle" color = {color} size = {26}/>
           ),
@@ -256,80 +174,12 @@ export default function App() {
       />
     )
   };
-
   return (
     <NavigationContainer>
       <MyTabs />
     </NavigationContainer>
   );
 }
-
-// export default class App extends Component {
-//   // const [dataLoaded, setDataLoaded] = useState(false);
-//
-//   // const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-//
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//         show_Main_App: false
-//     };
-//   }
-//
-//   on_Done_all_slides = () => {
-//     this.setState({ show_Main_App: true });
-//   };
-//   on_Skip_slides = () => {
-//     this.setState({ show_Main_App: true });
-//   };
-//
-//   // useEffect(() => {
-//   //   Appearance.addChangeListener(({ colorScheme }) => {
-//   //     setColorScheme(colorScheme);
-//   //   });
-//   // });
-//
-//   // if (!dataLoaded) {
-//   //   return(
-//   //     <AppLoading
-//   //       startAsync={fetchFonts}
-//   //       onFinish={() => setDataLoaded(true)}
-//   //     />
-//   //   )
-//   // };
-//
-//   render() {
-//     if (this.state.show_Main_App) {
-//       return (
-//         <NavigationContainer>
-//             <MyTabs />
-//         </NavigationContainer>
-//         // <View style={styles.MainContainer}>
-//         //   <Text style={{ textAlign: 'center', fontSize: 20, color: '#000' }}>
-//         //       This is your main App screen After App Walkthrough.
-//         //   </Text>
-//         // </View>
-//       );
-//     }
-//     else {
-//       return (
-//         <AppIntroSlider slides={slides} onDone={this.on_Done_all_slides}
-//           showSkipButton={true}
-//           onSkip={this.on_Skip_slides} />
-//         // <AppearanceProvider>
-//         //     <WalkthroughScreen
-//         //       appConfig={WalkthroughAppConfig}
-//         //       appStyles={DynamicAppStyles}
-//         //     />
-//         // </AppearanceProvider>
-//         );
-//     }
-//   // }
-//   }
-// }
-
-
-
 
 const styles = StyleSheet.create({
   MainContainer: {
@@ -379,9 +229,7 @@ const styles = StyleSheet.create({
   },
   taskText: {
     fontFamily: 'assistant-bold',
-    // alignItems: 'center',
     textAlign: 'center',
-    // justifyContent: 'center',
     fontSize: 18,
     color: '#69941c',
   },
@@ -409,26 +257,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   item: {
-    // flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
     marginTop: 20,
     borderColor: '#9dc9d1',
     borderWidth: 3,
-    // borderStyle: "dashed",
     borderRadius: 10,
     fontFamily: 'assistant-light',
     fontSize: 18,
-    // alignItems: 'center',
     flex: 1,
-    // justifyContent: 'center'
   },
   tinyLogo: {
     width: 50,
     height: 50,
-    // justifyContent: 'center',
-    // alignItems: 'center'
   },
   list: {
     marginRight: 10,
@@ -437,56 +279,3 @@ const styles = StyleSheet.create({
     flex:1,
   }
 });
-
-// const slides = [
-//   {
-//     key: 'k1',
-//     title: 'Ecommerce Leader',
-//     text: 'Best ecommerce in the world',
-//     image: {
-//       uri:
-//         'https://i.imgur.com/jr6pfzM.png',
-//     },
-//     titleStyle: styles.title,
-//     textStyle: styles.text,
-//     imageStyle: styles.image,
-//     backgroundColor: '#F7BB64',
-//   },
-//   {
-//     key: 'k2',
-//     title: 'fast delivery',
-//     text: 'get your order insantly fast',
-//     image: {
-//       uri:
-//         'https://i.imgur.com/au4H7Vt.png',
-//     },
-//     titleStyle: styles.title,
-//     textStyle: styles.text,
-//     imageStyle: styles.image,
-//     backgroundColor: '#F4B1BA',
-//   },
-//   {
-//     key: 'k3',
-//     title: 'many store ',
-//     text: 'Multiple store location',
-//     image: {
-//       uri: 'https://i.imgur.com/bXgn893.png',
-//     },
-//     titleStyle: styles.title,
-//     textStyle: styles.text,
-//     imageStyle: styles.image,
-//     backgroundColor: '#4093D2',
-//   },
-//   {
-//     key: 'k4',
-//     title: '24 hours suport',
-//     text: ' Get Support 24 Hours with Real Human',
-//     image: {
-//       uri: 'https://i.imgur.com/mFKL47j.png',
-//     },
-//     titleStyle: styles.title,
-//     textStyle: styles.text,
-//     imageStyle: styles.image,
-//     backgroundColor: '#644EE2',
-//   }
-// ];
