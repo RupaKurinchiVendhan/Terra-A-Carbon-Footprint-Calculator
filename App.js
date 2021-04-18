@@ -10,6 +10,8 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Header from './components/Header';
 import Challenge from './components/Challenge';
+import Diagnostic from './components/Diagnostic';
+import Footprint_Calculator from './components/assets/Footprint_Calculator';
 import Modal from 'react-native-modal';
 import ActivityRings, {ActivityRingsData, ActivityRingsConfig} from "react-native-activity-rings"; //, {ActivityRingsData, ActivityRingsConfig}
 
@@ -31,8 +33,28 @@ import DynamicAppStyles from "./src/DynamicAppStyles";
 // const {spawn} = require("child_process");
 // const app = express();
 
+// var transportation = 0;
+// var waste = 0;
+// var utility = 0;
 
-
+function add(a, b) {
+  return (a + b);
+}
+// class Calculate_Footprint extends Component {
+//   if (cars > 15000) {
+//     transportation += 15;
+//   } else if (cars > 10000) {
+//     transportation += 10;
+//   } else if (cars > 1000) {
+//     transportation += 6;
+//   } else if (cars > 0) {
+//     transportation += 4;
+//   }
+//
+//   return (
+//     transporation
+//   );
+// }
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -64,35 +86,57 @@ const fetchFonts = () => {
 // }
 
 function NewsScreen({ navigation }) {
+  <Diagnostic/>
     // <Feed/>
-    const [text, setName] = React.useState("Useless Text");
-    const [number, setNumber] = React.useState(null);
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={styles.titleText}>
-          Welcome!
-        </Text>
-        <Text style={styles.mainText}>
-          Ready to start living a sustainable lifestyle?
-        </Text>
-        <TextInput
-          style={styles.titleText}
-          placeholder="useless placeholder"
-          onChangeText={(val) => setNumber(val)}
-          value = {number}
-        />
-        <TextInput
-          style={styles.titleText}
-          placeholder="useless placeholder"
-          onChangeText={(val) => setNumber(val)}
-          value2 = {number}
-        />
-        // <Button
-        //   title="Go to Tasks"
-        //   onPress={() => ()}
-        // />
-      </View>
-  );
+  //   const [text, setName] = React.useState("Useless Text");
+  //   const [number, setNumber] = React.useState(null);
+  //
+  //
+  //   return (
+  //     // <View style = {styles.container}>
+  //     //       <TextInput style = {styles.input}
+  //     //          underlineColorAndroid = "transparent"
+  //     //          placeholder = "Email"
+  //     //          placeholderTextColor = "#9a73ef"
+  //     //          autoCapitalize = "none"
+  //     //          onChangeText = {this.handleEmail}/>
+  //     //
+  //     //       <TextInput style = {styles.input}
+  //     //          underlineColorAndroid = "transparent"
+  //     //          placeholder = "Password"
+  //     //          placeholderTextColor = "#9a73ef"
+  //     //          autoCapitalize = "none"
+  //     //          onChangeText = {this.handlePassword}/>
+  //     //
+  //     //       <TouchableOpacity
+  //     //          style = {styles.submitButton}
+  //     //          onPress = {
+  //     //             () => this.login(this.state.email, this.state.password)
+  //     //          }>
+  //     //          <Text style = {styles.submitButtonText}> Submit </Text>
+  //     //       </TouchableOpacity>
+  //     //    </View>
+  //     // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+  //     //   <Text style={styles.titleText}>
+  //     //     Welcome!
+  //     //   </Text>
+  //     //   <Text style={styles.mainText}>
+  //     //     Ready to start living a sustainable lifestyle?
+  //     //   </Text>
+  //     //   <TextInput
+  //     //     style={styles.titleText}
+  //     //     placeholder="useless placeholder"
+  //     //     onChangeText={(val) => setNumber(val)}
+  //     //     value = {number}
+  //     //   />
+  //     //   <TextInput
+  //     //     style={styles.titleText}
+  //     //     placeholder="useless placeholder"
+  //     //     onChangeText={(val) => setNumber(val)}
+  //     //     value2 = {number}
+  //     //   />
+  //     // </View>
+  // );
 }
 
 function TasksScreen() {
@@ -153,7 +197,7 @@ function AccountScreen({ navigation }) {
   const activityData = [
   {
     label: "Transportation",
-    value: 0.8,
+    value: get_transportation(),
     color: "#006400",
   },
   {
