@@ -88,6 +88,20 @@ flight_options = [
   {id:2, choice: 'Further distances (nearby state or country)'},
   {id:3, choice: 'Far (another continent)'},
 ]
+
+vegan_options = [
+  {id:0, choice: 'Yes'},
+  {id:1, choice: 'No'}
+]
+
+house_options = [
+  {id:0, choice: 'Large'},
+  {id:1, choice: 'Medium'},
+  {id:2, choice: 'Small'},
+  {id:3, choice: 'Apartment'},
+
+]
+
 function MultipleSelect({options, callback}) {
   const [selected, setSelected] = useState(0);
   return (
@@ -106,6 +120,7 @@ function MultipleSelect({options, callback}) {
     </View>
   )
 }
+
 class TranspoDiagnostic extends Component {
   constructor(props) {
     super(props);
@@ -138,10 +153,10 @@ class TranspoDiagnostic extends Component {
          value={this.state.car_mileage}
          onValueChange={val => this.setState({ car_mileage: val })}
         />
-        <Text style={styles.response}>
+        <Text style={styles.taskText2}>
           {(Math.round(this.state.car_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
         </Text>
-        <Text style={styles.question}>
+        <Text style={styles.taskText}>
           How many miles of public transportation?
         </Text>
         <Slider
@@ -152,17 +167,17 @@ class TranspoDiagnostic extends Component {
          value={this.state.public_trans_mileage}
          onValueChange={val => this.setState({ public_trans_mileage: val })}
         />
-        <Text style={styles.response}>
+        <Text style={styles.taskText2}>
           {(Math.round(this.state.public_trans_mileage/1000)*1000).toLocaleString(undefined, {minimumFractionDigits:0})} miles
         </Text>
-        <Text style={styles.question}>
+        <Text style={styles.taskText}>
           How far do you usually fly?
         </Text>
         <MultipleSelect
           options={flight_options}
           callback={this.updateFlight}
         />
-        <Text style={styles.taskText}>
+        <Text style={styles.taskText2}>
           {this.state.sliderValue}
         </Text>
       </View>
@@ -171,13 +186,18 @@ class TranspoDiagnostic extends Component {
 }
 
 class WasteDiagnostic extends Component {
-
   constructor(props) {
     super(props);
     this.state = {meat: 0};
-    this.state = {vegan: 'No'};
+    this.state = {vegan: 0};
+    this.state = {packaging: 0}
     this.state = {appliances: 0};
     this.state = {trash: 0};
+    this.state = {recycle: 0};
+  }
+
+  updateVegan = (idx) => {
+    this.setState({vegan: idx})
   }
 
   render() {
@@ -197,18 +217,16 @@ class WasteDiagnostic extends Component {
          value={this.state.meat}
          onValueChange={val => this.setState({ meat: val })}
         />
-        <Text style={styles.taskText}>
+        <Text style={styles.taskText2}>
           {this.state.meat} days
         </Text>
         <Text style={styles.taskText}>
           Are you a vegan?
         </Text>
-        <Picker
-          // selectedValue={"No"}
-          onValueChange={veganism => this.setState({vegan: veganism})}>
-          <Picker.Item label="Yes" value="Yes" />
-          <Picker.Item label='No' value='No' />
-        </Picker>
+        <MultipleSelect
+          options={vegan_options}
+          callback={this.updateVegan}
+        />
         <Text style={styles.taskText}>
           How many new household appliances do you purchase each year (eg furniture, electronics)?
         </Text>
@@ -220,7 +238,7 @@ class WasteDiagnostic extends Component {
          value={this.state.appliances}
          onValueChange={val => this.setState({ appliances: val })}
         />
-        <Text style={styles.taskText}>
+        <Text style={styles.taskText2}>
           {this.state.appliances} applicances
         </Text>
         <Text style={styles.taskText}>
@@ -234,22 +252,24 @@ class WasteDiagnostic extends Component {
          value={this.state.trash}
          onValueChange={val => this.setState({trash: val })}
         />
-        <Text style={styles.taskText}>
+        <Text style={styles.taskText2}>
           {this.state.trash} trash cans
         </Text>
+        <Text style={styles.taskText}>
+          About how many of the following do you recycle (glass, plastic, paper, aluminum, steel, food waste)?
+        </Text>
+        <Slider
+         style={{ width: 300 }}
+         step={1}
+         minimumValue={0}
+         maximumValue={6}
+         value={this.state.recycle}
+         onValueChange={val => this.setState({recycle: val })}
+        />
+        <Text style={styles.taskText2}>
+          {this.state.recycle} recycled items
+        </Text>
       </View>
-        // <MultipleChoice
-        //     options={[
-        //     'Lorem ipsum dolor sit',
-        //     'Lorem ipsum',
-        //     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        //     'Lorem ipsum dolor sit amet, consetetur',
-        //     'Lorem ipsum dolor'
-        //     ]}
-        //     selectedOptions={['Lorem ipsum']}
-        //     maxSelectedOptions={2}
-        //     onSelection={(option)=>alert(option + ' was selected!')}
-        // />
 
     );
   }
@@ -263,8 +283,9 @@ class UtilDiagnostic extends Component {
     this.state = {washing: 0};
   }
 
-  var util = [this.state.roommates, 0, this.state.washing];
-  var util2 = calculate_utility(util);
+  updateHouse = (idx) => {
+    this.setState({house: idx})
+  }
 
   render() {
     return (
@@ -283,17 +304,16 @@ class UtilDiagnostic extends Component {
          value={this.state.roommates}
          onValueChange={val => this.setState({ roommates: val })}
         />
-        <Text style={styles.taskText}>
+        <Text style={styles.taskText2}>
           {this.state.roommates} people
         </Text>
         <Text style={styles.taskText}>
           How big would you say your house is?
         </Text>
-        <Picker
-          onValueChange={size => this.setState({house: size})}>
-          <Picker.Item label="Yes" value="Yes" />
-          <Picker.Item label='No' value='No' />
-        </Picker>
+        <MultipleSelect
+          options={house_options}
+          callback={this.updateHouse}
+        />
         <Text style={styles.taskText}>
           How many times a week do you run the dishwasher, washing machine, and dryer?
         </Text>
@@ -305,7 +325,7 @@ class UtilDiagnostic extends Component {
          value={this.state.washing}
          onValueChange={val => this.setState({ washing: val })}
         />
-        <Text style={styles.taskText}>
+        <Text style={styles.taskText2}>
           {this.state.washing} times
         </Text>
       </View>
@@ -473,6 +493,14 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     fontSize: 18,
     color: '#000000',
+  },
+  taskText2: {
+    fontFamily: 'assistant-light',
+    // alignItems: 'center',
+    textAlign: 'center',
+    // justifyContent: 'center',
+    fontSize: 18,
+    color: '#69941c',
   },
   buttonText: {
     fontSize: 10,

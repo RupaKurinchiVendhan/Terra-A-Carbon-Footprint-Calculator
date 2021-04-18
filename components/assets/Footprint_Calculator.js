@@ -77,79 +77,79 @@ function get_transportation() {
 }
 
 // Eating meat, household purchases, trash cans per week, types of waste recycled
-// function waste(list) {
-//     var waste_score = 0;
-//
-//     // Meat per week
-//     if (list[0] == 7) {
-//         waste_score += 10;
-//     }
-//     else if (list[0] > 2) {
-//         waste_score += 8;
-//     }
-//     else if (list[0] > 0) {
-//         waste_score += 5;
-//     }
-//
-//     // Vegan y/n
-//     if (list[1] == 1) {
-//         waste_score += 2;
-//     }
-//     else if (list[1] == 0 && list[0] == 0) {
-//         waste_score += 4;
-//     }
-//
-//     // Diet type (prepackaged, fresh, mix)
-//     if (list[2] == 0) {
-//         waste_score += 12;
-//     }
-//     else if (list[2] == 1) {
-//         waste_score += 6;
-//     }
-//     else if (list[2] == 2) {
-//         waste_score += 2;
-//     }
-//
-//     // Household purchases per year
-//     if (list[3] > 7) {
-//         waste_score += 10;
-//     }
-//     else if (list[3] > 5) {
-//         waste_score += 8;
-//     }
-//     else if (list[3] > 3) {
-//         waste_score += 6;
-//     }
-//     else if (list[3] > 0) {
-//         waste_score += 4;
-//     }
-//     else {
-//         waste_score += 2;
-//     }
-//
-//     // Trash cans filled per week
-//     if (list[4] >= 4) {
-//         waste_score += 50;
-//     }
-//     else if (list[4] == 3) {
-//         waste_score += 40;
-//     }
-//     else if (list[4] == 2) {
-//         waste_score += 30;
-//     }
-//     else if (list[4] == 1) {
-//         waste_score += 20;
-//     }
-//     else {
-//         waste_score += 5;
-//     }
-//
-//     // Types of waste recycled:
-//     waste_score += 24;
-//     waste_score -= 4 * list[5];
-//
-//     return waste_score;
-// }
+function waste(list) {
+    var waste_score = 0;
+
+    // Meat per week
+    if (list[0] == 7) {
+        waste_score += 10;
+    }
+    else if (list[0] > 2) {
+        waste_score += 8;
+    }
+    else if (list[0] > 0) {
+        waste_score += 5;
+    }
+
+    // Vegan y/n
+    if (list[1] == 1) {
+        waste_score += 2;
+    }
+    else if (list[1] == 0 && list[0] == 0) {
+        waste_score += 4;
+    }
+
+    // Diet type (prepackaged, fresh, mix)
+    if (list[2] == 0) {
+        waste_score += 12;
+    }
+    else if (list[2] == 1) {
+        waste_score += 6;
+    }
+    else if (list[2] == 2) {
+        waste_score += 2;
+    }
+
+    // Household purchases per year
+    if (list[3] > 7) {
+        waste_score += 10;
+    }
+    else if (list[3] > 5) {
+        waste_score += 8;
+    }
+    else if (list[3] > 3) {
+        waste_score += 6;
+    }
+    else if (list[3] > 0) {
+        waste_score += 4;
+    }
+    else {
+        waste_score += 2;
+    }
+
+    // Trash cans filled per week
+    if (list[4] >= 4) {
+        waste_score += 50;
+    }
+    else if (list[4] == 3) {
+        waste_score += 40;
+    }
+    else if (list[4] == 2) {
+        waste_score += 30;
+    }
+    else if (list[4] == 1) {
+        waste_score += 20;
+    }
+    else {
+        waste_score += 5;
+    }
+
+    // Types of waste recycled:
+    waste_score += 24;
+    waste_score -= 4 * list[5];
+
+    return waste_score;
+}
 //
 // function get_waste(waste_score, max_waste) {
 //     return '%.2f'%(float(waste_score) / max_waste * 100);

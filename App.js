@@ -111,13 +111,13 @@ function NewsScreen({ navigation }) {
   //     //          autoCapitalize = "none"
   //     //          onChangeText = {this.handlePassword}/>
   //     //
-  //     //       <TouchableOpacity
-  //     //          style = {styles.submitButton}
-  //     //          onPress = {
-  //     //             () => this.login(this.state.email, this.state.password)
-  //     //          }>
-  //     //          <Text style = {styles.submitButtonText}> Submit </Text>
-  //     //       </TouchableOpacity>
+            // <TouchableOpacity
+            //    style = {styles.submitButton}
+            //    onPress = {
+            //       () => this.login(this.state.email, this.state.password)
+            //    }>
+            //    <Text style = {styles.submitButtonText}> Submit </Text>
+            // </TouchableOpacity>
   //     //    </View>
   //     // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
   //     //   <Text style={styles.titleText}>
@@ -199,7 +199,7 @@ function MyTabs() {
   return (
 
     <Tab.Navigator
-        initialRouteName="News"
+        initialRouteName="Footprint Calculator"
         activeColor="#f0edf6"
         inactiveColor="#9dc9d1"
         labelStyle={{
@@ -209,13 +209,13 @@ function MyTabs() {
         barStyle={{ backgroundColor: '#69941c' }}
       >
       <Tab.Screen
-        name="News"
+        name="Footprint Calcuator"
         component={NewsScreen}
         options={{
-          tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> News </Text>,
+          tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> Calculator </Text>,
           // tabBarColor: '#69941c',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name = "newspaper" color = {color} size = {26} />
+            <MaterialCommunityIcons name = "foot-print" color = {color} size = {26} />
           ),
         }}
        />
@@ -231,10 +231,10 @@ function MyTabs() {
          }}
        />
       <Tab.Screen
-        name="Account"
+        name="Progress"
         component={AccountScreen}
         options={{
-          tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> Account </Text>,
+          tabBarLabel: <Text style={{ fontSize: 15, fontFamily: 'assistant-semi'}}> My Progress </Text>,
           // tabBarColor: '#9dc9d1',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name = "account-circle" color = {color} size = {26}/>
