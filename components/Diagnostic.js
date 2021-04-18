@@ -85,6 +85,24 @@ function get_transportation() {
     return '%.2f'%(transportation_score / max_transportation);
 }
 
+class TranspoDiagnostic extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { username: '' };
+  }
+  render () {
+    return (
+      <form>
+        <h1>Hello {this.state.username}</h1>
+      <p>Enter your name:</p>
+      <input
+        type='text'
+        onChange={this.myChangeHandler}
+      />
+      </form>
+    )
+  }
+}
 export default class Diagnostic extends Component {
 
 
@@ -106,7 +124,6 @@ export default class Diagnostic extends Component {
       this.setState({ transporation: flight_transportation(number) })
    }
    render() {
-      const [car_mileage, setCarMileage] = useState(0);
       return (
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.scrollView}>
@@ -119,85 +136,63 @@ export default class Diagnostic extends Component {
             <Text style={styles.mainText}>
               Let's start by answering a few questions. If you don't know the answer, take your best guess!
             </Text>
+            <TranspoDiagnostic/>
             <Text style={styles.titleText}>
               How many miles do you drive in your car?
             </Text>
             <Text style={styles.mainText}>
               "description"
             </Text>
-            <View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
-              <Slider
-                value={this.state.car_transportation}
-                onValueChange={(value) => this.handleCarTransportation({ value })}
-              />
-              <Text>Value: {this.state.value}</Text>
-            </View>
-            <TextInput style = {styles.input}
-                underlineColorAndroid = "transparent"
-                placeholder = "Miles"
-                placeholderTextColor = "#9a73ef"
-                autoCapitalize = "none"
-                onChangeText = {this.handleCarTransportation}/>
-            <Text style={styles.titleText}>
-              How many miles do you use public transportation for?
-            </Text>
-            <Text style={styles.mainText}>
-              "description"
-            </Text>
-            <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               placeholder = "Miles"
-               placeholderTextColor = "#9a73ef"
-               autoCapitalize = "none"
-               onChangeText = {this.handlePassword}/>
+
           </ScrollView>
         </SafeAreaView>
-         // <View style = {styles.container}>
-         //   <Text style={styles.titleText}>
-         //     Welcome!
-         //   </Text>
-         //   <Text style={styles.mainText}>
-         //     Ready to start living a sustainable lifestyle?
-         //   </Text>
-         //   <Text style={styles.mainText}>
-         //     Let's start by answering a few questions. If you don't know the answer, take your best guess!
-         //   </Text>
-         //   <Text style={styles.titleText}>
-         //     How many miles do you drive in your car?
-         //   </Text>
-         //   <Text style={styles.mainText}>
-         //     "description"
-         //   </Text>
-         //   <TextInput style = {styles.input}
-         //       underlineColorAndroid = "transparent"
-         //       placeholder = "Miles"
-         //       placeholderTextColor = "#9a73ef"
-         //       autoCapitalize = "none"
-         //       onChangeText = {this.handleCarTransportation}/>
-         //   <Text style={styles.titleText}>
-         //     How many miles do you use public transportation for?
-         //   </Text>
-         //   <Text style={styles.mainText}>
-         //     "description"
-         //   </Text>
-         //   <TextInput style = {styles.input}
-         //      underlineColorAndroid = "transparent"
-         //      placeholder = "Miles"
-         //      placeholderTextColor = "#9a73ef"
-         //      autoCapitalize = "none"
-         //      onChangeText = {this.handlePassword}/>
-         // </View>
-            // <TouchableOpacity
-            //    style = {styles.submitButton}
-            //    onPress = {
-            //       () => this.login(this.state.email, this.state.password)
-            //    }>
-            //    <Text style = {styles.submitButtonText}> Submit </Text>
-            // </TouchableOpacity>
 
       )
    }
 }
+
+ // <View style = {styles.container}>
+ //   <Text style={styles.titleText}>
+ //     Welcome!
+ //   </Text>
+ //   <Text style={styles.mainText}>
+ //     Ready to start living a sustainable lifestyle?
+ //   </Text>
+ //   <Text style={styles.mainText}>
+ //     Let's start by answering a few questions. If you don't know the answer, take your best guess!
+ //   </Text>
+ //   <Text style={styles.titleText}>
+ //     How many miles do you drive in your car?
+ //   </Text>
+ //   <Text style={styles.mainText}>
+ //     "description"
+ //   </Text>
+ //   <TextInput style = {styles.input}
+ //       underlineColorAndroid = "transparent"
+ //       placeholder = "Miles"
+ //       placeholderTextColor = "#9a73ef"
+ //       autoCapitalize = "none"
+ //       onChangeText = {this.handleCarTransportation}/>
+ //   <Text style={styles.titleText}>
+ //     How many miles do you use public transportation for?
+ //   </Text>
+ //   <Text style={styles.mainText}>
+ //     "description"
+ //   </Text>
+ //   <TextInput style = {styles.input}
+ //      underlineColorAndroid = "transparent"
+ //      placeholder = "Miles"
+ //      placeholderTextColor = "#9a73ef"
+ //      autoCapitalize = "none"
+ //      onChangeText = {this.handlePassword}/>
+ // </View>
+    // <TouchableOpacity
+    //    style = {styles.submitButton}
+    //    onPress = {
+    //       () => this.login(this.state.email, this.state.password)
+    //    }>
+    //    <Text style = {styles.submitButtonText}> Submit </Text>
+    // </TouchableOpacity>
 
 const styles = StyleSheet.create({
   MainContainer: {
