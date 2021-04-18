@@ -5,13 +5,12 @@ import {Component} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Image, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, TextInput, SafeAreaView, ScrollView, Animated } from 'react-native';
+import { Image, Slider, StyleSheet, TouchableOpacity, Text, View, Button, FlatList, TextInput, SafeAreaView, ScrollView, Animated } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import Footprint_Calculator from './assets/Footprint_Calculator';
 import Modal from 'react-native-modal';
 import ActivityRings, {ActivityRingsData, ActivityRingsConfig} from "react-native-activity-rings"; //, {ActivityRingsData, ActivityRingsConfig}
-import {Slider} from 'react-native-elements';
 
 
 var transportation_score = 0;
@@ -88,18 +87,26 @@ function get_transportation() {
 class TranspoDiagnostic extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: '' };
+    this.state = { username: '', sliderValue: 0 };
   }
   render () {
     return (
-      <form>
-        <h1>Hello {this.state.username}</h1>
-      <p>Enter your name:</p>
-      <input
-        type='text'
-        onChange={this.myChangeHandler}
-      />
-      </form>
+      <View>
+        <Text style={styles.header}>
+          Transportation
+        </Text>
+        <Text style={styles.question}>
+          How many miles do you drive per year?
+        </Text>
+        <Slider
+         style={{ width: 300 }}
+         step={1}
+         minimumValue={0}
+         maximumValue={100000}
+         value={this.state.sliderValue}
+         onValueChange={val => this.setState({ sliderValue: val })}
+        />
+      </View>
     )
   }
 }
@@ -134,15 +141,9 @@ export default class Diagnostic extends Component {
               Ready to start living a sustainable lifestyle?
             </Text>
             <Text style={styles.mainText}>
-              Let's start by answering a few questions. If you don't know the answer, take your best guess!
+              Let's start by answering a few questions.
             </Text>
             <TranspoDiagnostic/>
-            <Text style={styles.titleText}>
-              How many miles do you drive in your car?
-            </Text>
-            <Text style={styles.mainText}>
-              "description"
-            </Text>
 
           </ScrollView>
         </SafeAreaView>
