@@ -19,8 +19,6 @@ var max_total = max_transportation + max_waste + max_utility;
 
 // Personal/public/flights and miles per year
 function car_transportation(car) {
-    var transportation_score = 0;
-
     // miles of car usage per year
     if (car > 15000) {
         transportation_score += 15;
@@ -242,5 +240,23 @@ function get_transportation() {
 
 
 // Completing a goal: subtract points?
-// function goal_update(goal) {
-// }
+function goal_update(task) {
+    if (task.status) {
+        if (task.category.equals("Transportation")) {
+            transportation_score -= 4;
+        }
+        else if (task.category.equals("Utilities")) {
+            utility_score -= 2;
+        }
+        else if (task.category.equals("Consumption/Waste")) {
+            waste_score -= 8;
+        }
+        else {
+            transportation_score -= 1;
+            utility_score -= 1;
+            waste_score -= 1;
+        }
+    }
+    tier(tiers);
+    return [total_score, transportation_score, waste_score, utility_score];
+}
