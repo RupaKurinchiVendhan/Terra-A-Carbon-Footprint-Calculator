@@ -85,6 +85,26 @@ function get_transportation() {
     return '%.2f'%(transportation_score / max_transportation);
 }
 
+
+class WasteDiagnostic extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { username : ''};
+  }
+
+  render() {
+    return (
+      <View>
+        <Text style={styles.header}>
+          Waste
+        </Text>
+        <Text style={styles.question}>
+          How many days a week do you eat meat?
+        </Text>
+    );
+  }
+}
+
 export default class Diagnostic extends Component {
 
 
@@ -117,7 +137,7 @@ export default class Diagnostic extends Component {
               Ready to start living a sustainable lifestyle?
             </Text>
             <Text style={styles.mainText}>
-              Let's start by answering a few questions. If you don't know the answer, take your best guess!
+              Let's start by answering a few questions.
             </Text>
             <Text style={styles.titleText}>
               How many miles do you drive in your car?
@@ -138,18 +158,7 @@ export default class Diagnostic extends Component {
                 placeholderTextColor = "#9a73ef"
                 autoCapitalize = "none"
                 onChangeText = {this.handleCarTransportation}/>
-            <Text style={styles.titleText}>
-              How many miles do you use public transportation for?
-            </Text>
-            <Text style={styles.mainText}>
-              "description"
-            </Text>
-            <TextInput style = {styles.input}
-               underlineColorAndroid = "transparent"
-               placeholder = "Miles"
-               placeholderTextColor = "#9a73ef"
-               autoCapitalize = "none"
-               onChangeText = {this.handlePassword}/>
+
           </ScrollView>
         </SafeAreaView>
          // <View style = {styles.container}>
