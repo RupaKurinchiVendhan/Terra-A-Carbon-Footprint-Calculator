@@ -110,7 +110,7 @@ function Challenge({item, remove}) { // pressHandler,
           align="center"
         >
           <View style={styles2.mainText}>
-            <Text style={{textAlign: 'center'}}>
+            <Text style={styles2.list}>
               {item.content}
             </Text>
           </View>
@@ -208,10 +208,12 @@ const styles2 = StyleSheet.create({
     // alignItems: 'center'
   },
   list: {
+    fontFamily: 'assistant-light',
     marginRight: 10,
     marginLeft: 10,
     marginTop: 5,
     flex:1,
+    fontSize: 16,
   }
 });
 

@@ -19,11 +19,11 @@ import { getNews } from './src/news';
 import Articles from './src/components/Articles';
 import Feed from './Feed';
 
-import AppIntroSlider from 'react-native-app-intro-slider';
+// import AppIntroSlider from 'react-native-app-intro-slider';
 
-import { AppearanceProvider, Appearance } from "react-native-appearance";
-import WalkthroughScreen from "./src/screens/WalkthroughScreen/WalkthroughScreen";
-import WalkthroughAppConfig from "./src/WalkthroughAppConfig";
+// import { AppearanceProvider, Appearance } from "react-native-appearance";
+// import WalkthroughScreen from "./src/screens/WalkthroughScreen/WalkthroughScreen";
+// import WalkthroughAppConfig from "./src/WalkthroughAppConfig";
 import DynamicAppStyles from "./src/DynamicAppStyles";
 
 // import * as $ from "jquery";
@@ -140,48 +140,6 @@ function NewsScreen({ navigation }) {
   //     //   />
   //     // </View>
   // );
-}
-
-function TasksScreen() {
-
-
-    const [challenges, setChallenges] = useState([
-      {text: 'Eat on tiny plates to limit portion sizes and eliminate food waste.', modal: "A study performed by Roskilde University revealed that if the plate size is reduced by just 9%, the food waste can be reduced by over 25%. In other words, by reducing the size of the plate, you ensure that you don't over feed yourself or the trash bin!", source: require('./assets/plates.png'), key: 1},
-      {text: 'Allow for more white space in your fridge.', modal: 'Oftentimes, we fill up our shopping carts so that we can fill up our fridge. Leaving white space in your refrigerator is a great way to limit food waste by making sure that you get a chance to eat everything you buy.', source: require('./assets/fridge.png'), key: 2},
-      {text: 'Donate to a climate science organization.', modal: 'If you have the means to donate to climate change charities, consider contributing to research and raising awareness. Some high-imact, evidence-based, cost-effective organizations include The Coalition for Rainforest Nations, Clean Air Task Force, The Information Technology and Innovation Foundation, Rainforest Foundation US, Sandbag, and The Climate Emergency Fund.', source: require('./assets/donate.png'), key: 3},
-      {text: 'Separate the bottle caps from your bottles when recycling.', modal: 'sdfljskdflskdjf', source: require('./assets/recycle.png'), key: 4},
-      {text: 'Try to replace disposable containers with jars or bottles.', modal: 'sdfljskdflskdjf', source: require('./assets/jars.png'), key: 5},
-      {text: 'Use your food waste as compost.', modal: 'sdfljskdflskdjf', source: require('./assets/compost.png'), key: 6},
-      {text: 'Replace incandescent light bulbs with compact fluorescent bulbs (CFLs).', modal: 'sdfljskdflskdjf', source: require('./assets/bulbs.png'), key: 7},
-      {text: 'Buy a reusable water bottle.', modal: 'sdfljskdflskdjf', source: require('./assets/bottle.png'), key: 8},
-      {text: 'Eat locally-grown foods and produce.', modal: 'sdfljskdflskdjf', source: require('./assets/eat.png'), key: 9},
-      {text: 'Try growing your own vegetables.', modal: 'sdfljskdflskdjf', source: require('./assets/produce.png'), key: 10},
-      {text: "Donate clothes that you don't need and repurpose un-donatable ones.", modal: 'sdfljskdflskdjf', source: require('./assets/clothes.png'), key: 11},
-      {text: 'Drink filtered tap water.', modal: 'sdfljskdflskdjf', source: require('./assets/water.png'), key: 12},
-      {text: 'Only use 2-day shipping if you need the item immediately.', modal: 'sdfljskdflskdjf', source: require('./assets/shipping.png'), key: 13},
-      {text: "If you can walk or bike there, don't drive.", modal: 'sdfljskdflskdjf', source: require('./assets/walk.png'), key: 14}
-    ]);
-
-    const renderItem = ({ item }) => {
-      return (
-        <Challenge
-          item={item}
-        />
-      );
-    };
-
-    return (
-      <View style={styles.container}>
-        <Header />
-          <View style={styles.list}>
-              <FlatList
-                contentInset= {{bottom: 80}}
-                data={challenges}
-                renderItem={renderItem}
-              />
-          </View>
-      </View>
-    );
 }
 
 function AccountScreen({ navigation }) {
