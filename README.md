@@ -7,7 +7,11 @@ Terra is an app created for users to monitor their carbon footprint. It includes
 - an overall status rating based on results :+1: :-1:
 - goal-oriented tasks to guide the user in living greener :seedling:
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/EjMsAemSciU/0.jpg)](https://www.youtube.com/watch?v=EjMsAemSciU)
+<p align="center">
+  [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/EjMsAemSciU/0.jpg)](https://www.youtube.com/watch?v=EjMsAemSciU)
+</p>
+
+
 
 ## Inspiration
 We wanted to create something that could be used by anyone. We each need to do our part in helping save our planet, and being mindful of our carbon footprint is an easy way to begin doing so. However, this may seem complicated and rather daunting, so we wanted to present a simple solution where a user can figure out their carbon footprint and find ways to reduce it quickly and with ease.
