@@ -6,6 +6,7 @@ Terra is an app created for users to monitor their carbon footprint. It includes
 - carbon footprint percentage results :thought_balloon:
 - an overall status rating based on results :+1: :-1:
 - goal-oriented tasks to guide the user in living greener :seedling:
+
 Learn more by watching our [trailer](https://www.youtube.com/watch?v=EjMsAemSciU).
 
 
